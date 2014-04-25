@@ -1,0 +1,65 @@
+apply plugin: 'android-library'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+/*
+Making a jar file: approach 1
+http://stackoverflow.com/questions/17218295/android-gradle-build-system-create-jar-not-library
+ */
+//    sourceSets {
+//        main  {
+//            java {
+//                srcDir "src/main/java"
+//            }
+//        }
+//    }
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:19.+"
+    compile "com.android.support:gridlayout-v7:19.+"
+    compile "com.android.support:support-v4:19.+"
+    compile "com.squareup.dagger:dagger:1.2.+"
+    compile "com.squareup.dagger:dagger-compiler:1.2.+"
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+/*
+Making a jar file: approach 1
+http://stackoverflow.com/questions/17218295/android-gradle-build-system-create-jar-not-library
+It warns for deprecation, but it is just a bug of Android Studio
+http://stackoverflow.com/questions/21496956/gradle-deprecation-relying-on-packaging-to-define-the-extension-of-the-main-art
+ */
+//task jar(type: Jar) {
+//    from android.sourceSets.main.java
+//}
+
+/*
+Making a jar file: approach 2
+http://stackoverflow.com/questions/16763090/how-to-export-library-to-jar-in-android-studio
+It warns for deprecation, but it is just a bug of Android Studio
+http://stackoverflow.com/questions/21496956/gradle-deprecation-relying-on-packaging-to-define-the-extension-of-the-main-art
+ */
+task jar(type: Copy) {
+    from('build/bundles/release/')
+    into('build/libs/')
+    include('classes.jar')
+    rename('classes.jar', 'daggered-android.jar')
+}
