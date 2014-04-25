@@ -1,4 +1,13 @@
-YourConsole
-===========
+# DaggeredAndroid
 
-A small Android app project for my practice. Just buffers some texts or logcats then print them out.
+An easy way to integrate Dagger DI with Android applications.
+
+
+## Install
+
+TODO:
+
+
+## Usage
+
+TODO:
