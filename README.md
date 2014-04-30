@@ -25,6 +25,52 @@ Options without subclassing provided base classes are currently not available ye
 
 ### Making modules with DaggeredAndroid
 
+The primally reason you feel difficult to use Dagger is how to deal with Context object in Android. DaggeredAndroid provides a `DaggeredApplicationModule` that provides 2 different Context object, the Application Context and the Injecting Context. Application Context is just a singleton instance of your Application class, suited to populate global services like SharedPreference. Injecting Context is an instance of Activity or Service which is just being injected by Dagger. You can use this context to populate context-specific services like LayoutInfrator.
+
+If you'd like to inject Application Context, specify `@ForApplication` annotation before Context. Use `@ForInjecting` annotation if you prefer using Injecting Context. Ommiting these annotation when you inject Context will results in a compile error.
+
+Here's an example of Custom Module class that uses `DaggeredAndroidModule`.
+
+```java
+@Module(
+        includes = {
+                DaggeredApplicationModule.class
+        },
+        injects = {
+                // Your Activity, Fragment and Service (dynamically injected on appropriate timings by Daggered classes )
+                MyFragment.class,
+                MyService.class,
+                MyActivity.class
+
+                // Model (statically injected recursively when injection is happening, uses constructor injections)
+                // Usually you will not add other than Activity, Fragment or Service
+        }
+)
+public class AppModule {
+
+    @Provides
+    @Singleton
+    GlobalEventBus provideGlobalEventBus() {
+        return new GlobalEventBus();
+    }
+
+    @Provides
+    @Singleton
+    GlobalPreference provideGlobalPreference(@ForApplication Context context) {
+        // Uses application context by @ForApplication annotation here
+        // In GlobalPreference, context will be used to get SharedPreference service
+        return new GlobalPreference(context);
+    }
+
+    @Provides
+    ConsoleListAdapter provideConsoleListAdapter(@ForInjecting Context context) {
+        // Uses injecting context by @ForInjecting annotation here
+        // In MyAdapter, context will be used to get LayoutInflator service
+        return new MyAdapter(context);
+    }
+}
+```
+
 ### Integrate DaggeredAndroid into your app
 
 First of all, subclass `DaggeredApplication`. Override `getModules` method to add your own Dagger Modules.
