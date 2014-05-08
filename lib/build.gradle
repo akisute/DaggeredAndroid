@@ -5,8 +5,8 @@ android {
     buildToolsVersion "19.0.3"
 
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 19
+        minSdkVersion 11 // for Fragment: Any other components should work on 7.
+        targetSdkVersion 14
         versionCode 1
         versionName "1.0.0"
     }

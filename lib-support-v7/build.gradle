@@ -1,0 +1,34 @@
+apply plugin: 'android-library'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion 11 // has to be higher than main lib to keep gradle satisfied, but actually this library works well on 7.
+        targetSdkVersion 14
+        versionCode 1
+        versionName "1.0.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile project(":lib-support-v4")
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+task jar(type: Copy) {
+    from('build/bundles/release/')
+    into('build/libs/')
+    include('classes.jar')
+    rename('classes.jar', 'daggered-android-support-v7.jar')
+}

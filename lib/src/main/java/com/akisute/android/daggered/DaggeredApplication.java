@@ -27,22 +27,18 @@ public abstract class DaggeredApplication extends android.app.Application {
         mObjectGraph.inject(object);
     }
 
-    public void inject(Context context) {
-        mInjectingContext = context;
-        mObjectGraph.inject(context);
+    public void inject(Object object, Context injectingContext) {
+        mInjectingContext = injectingContext;
+        mObjectGraph.inject(object);
         mInjectingContext = null;
     }
 
-    public void inject(android.support.v4.app.Fragment fragment) {
-        mInjectingContext = fragment.getActivity();
-        mObjectGraph.inject(fragment);
-        mInjectingContext = null;
+    public void inject(Context context) {
+        inject(context, context);
     }
 
     public void inject(android.app.Fragment fragment) {
-        mInjectingContext = fragment.getActivity();
-        mObjectGraph.inject(fragment);
-        mInjectingContext = null;
+        inject(fragment, fragment.getActivity());
     }
 
     public Context getInjectingContext() {
