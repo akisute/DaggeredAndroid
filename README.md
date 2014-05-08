@@ -5,16 +5,25 @@ An easy way to integrate Dagger DI with Android applications. DaggeredAndroid pr
 
 ## Install
 
-Copy all .java files in `com.akisute.android.daggered` into your project, then resolve dependencies by adding following libraries into your project as well:
+Copy all .java files in `com.akisute.android.daggered` under `lib/src/main/java` into your project, then resolve dependencies by adding following libraries into your project as well:
 
 * dagger 1.2.+ (`com.squareup.dagger:dagger:1.2.+`)
 * dagger-compiler 1.2.+ (`com.squareup.dagger:dagger-compiler:1.2.+`)
-* support-v4 latest (`com.android.support:support-v4`)
-    * basically you can omit support-v4 if you'd like but it requires some source code modifications
-* appcompat-v7 latest (`com.android.support:appcompat-v7`) - optional
-    * only if you'd like to use `DaggeredActionBarActivity`
 
 Install via maven or gradle is currently not available.
+
+
+### support-v4 and support-v7 version
+
+There are sublibraries which supports android-support-v4 and android-support-v7 classes as well. You can find them under `lib-support-v4/src/main/java` and  `lib-support-v7/src/main/java`, respectively. 
+
+Additionaly, You need to add following support libraries:
+
+* support-v4 latest (`com.android.support:support-v4`)
+    * Required for lib-support-v4
+    * Required for lib-support-v7
+* appcompat-v7 latest (`com.android.support:appcompat-v7`)
+    * Required for lib-support-v7
 
 
 ## Usage
