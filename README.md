@@ -122,3 +122,7 @@ public class MyFragment extends DaggeredFragment {
 
 Activities, Fragments and Services are automatically injected on appropriate timings. As long as you keep following on lifecycle of standard Android app, all injections should work properly.
 
+## Future Plans
+
+* Enable install via Maven (or Gradle).
+* Use annotations (like @Daggered) instead of inheritance. Inheritance causes lots of disadvantages especially when new kind of Activities or Fragments are introduced. We should let AnnotationProcessor generate Daggered codes to solve the problem.
