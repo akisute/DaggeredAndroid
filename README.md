@@ -2,35 +2,29 @@
 
 An easy way to integrate Dagger DI with Android applications. DaggeredAndroid provides you some convinient base classes to integrate.
 
+Currently DaggeredAndroid runs with Dagger version 1.2.2. DaggeredAndroid requires Android SDK target version 11 (4.0) or later.
 
 ## Install
 
 Copy all .java files in `com.akisute.android.daggered` under `lib/src/main/java` into your project, then resolve dependencies by adding following libraries into your project as well:
 
-* dagger 1.2.+ (`com.squareup.dagger:dagger:1.2.+`)
-* dagger-compiler 1.2.+ (`com.squareup.dagger:dagger-compiler:1.2.+`)
+* dagger 1.2.2 (`com.squareup.dagger:dagger:1.2.2`)
+* dagger-compiler 1.2.2 (`com.squareup.dagger:dagger-compiler:1.2.2`)
 
-Install via maven or gradle is currently not available.
+You may also build the project using gradle or Android Studio. Execute the task `jar` and you'll find a jar built under `build/libs/` directory.
+
+Installing this library via maven or gradle is currently not available.
 
 
 ### support-v4 and support-v7 version
 
-There are sublibraries which supports android-support-v4 and android-support-v7 classes as well. You can find them under `lib-support-v4/src/main/java` and  `lib-support-v7/src/main/java`, respectively. 
-
-Additionaly, You need to add following support libraries:
-
-* support-v4 latest (`com.android.support:support-v4`)
-    * Required for lib-support-v4
-    * Required for lib-support-v7
-* appcompat-v7 latest (`com.android.support:appcompat-v7`)
-    * Required for lib-support-v7
-
+From DaggeredAndroid 2.0.0, Support libraries such as support-v4 and support-v7 are no longer supported by DaggeredAndroid.
 
 ## Usage
 
 As mentioned first, DaggeredAndroid is just a set of abstract base classes of Application, Activity, Fragment and Service. So you need to subclass them in order to integrate DaggeredAndroid.
 
-Options without subclassing provided base classes are currently not available yet.
+Options without subclassing provided base classes will not be available due to several technical restrictions.
 
 ### Making modules with DaggeredAndroid
 
@@ -125,4 +119,4 @@ Activities, Fragments and Services are automatically injected on appropriate tim
 ## Future Plans
 
 * Enable install via Maven (or Gradle).
-* Use annotations (like @Daggered) instead of inheritance. Inheritance causes lots of disadvantages especially when new kind of Activities or Fragments are introduced. We should let AnnotationProcessor generate Daggered codes to solve the problem.
+

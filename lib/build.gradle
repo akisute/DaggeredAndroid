@@ -1,62 +1,41 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    compileSdkVersion 22
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        minSdkVersion 11 // for Fragment: Any other components should work on 7.
-        targetSdkVersion 14
-        versionCode 1
-        versionName "1.0.0"
+        // Fragment requires version 11. Any other components works fine on version 7.
+        minSdkVersion 11
+        targetSdkVersion 22
+        versionCode 2
+        versionName "2.0.0"
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
     lintOptions {
         abortOnError false
     }
-/*
-Making a jar file: approach 1
-http://stackoverflow.com/questions/17218295/android-gradle-build-system-create-jar-not-library
- */
-//    sourceSets {
-//        main  {
-//            java {
-//                srcDir "src/main/java"
-//            }
-//        }
-//    }
 }
 
 dependencies {
-    compile "com.squareup.dagger:dagger:1.2.+"
-    compile "com.squareup.dagger:dagger-compiler:1.2.+"
+    compile "com.squareup.dagger:dagger:1.2.2"
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-/*
-Making a jar file: approach 1
-http://stackoverflow.com/questions/17218295/android-gradle-build-system-create-jar-not-library
-It warns for deprecation, but it is just a bug of Android Studio
-http://stackoverflow.com/questions/21496956/gradle-deprecation-relying-on-packaging-to-define-the-extension-of-the-main-art
- */
-//task jar(type: Jar) {
-//    from android.sourceSets.main.java
-//}
+group = 'com.akisute'
+archivesBaseName = 'daggeredandroid'
+version = '2.0.0'
 
-/*
-Making a jar file: approach 2
-http://stackoverflow.com/questions/16763090/how-to-export-library-to-jar-in-android-studio
-It warns for deprecation, but it is just a bug of Android Studio
-http://stackoverflow.com/questions/21496956/gradle-deprecation-relying-on-packaging-to-define-the-extension-of-the-main-art
- */
+// http://tech.admax.ninja/2014/09/10/export-jar-by-android-studio/
 task jar(type: Copy) {
-    from('build/bundles/release/')
+    from('build/intermediates/bundles/release/')
     into('build/libs/')
     include('classes.jar')
-    rename('classes.jar', 'daggered-android.jar')
+    rename('classes.jar', archivesBaseName + '-' + version + '.jar')
 }
+jar.dependsOn(build)
